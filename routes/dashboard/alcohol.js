@@ -51,11 +51,11 @@ router.post('/add', upload.single('urlImg'), (req,res) => {
     console.dir(type)
     if (req.file)
     {
-        urlImg = "http://localhost:8080/assets/img/alcohols/" + req.file.originalname;
+        urlImg = "https://alcohol-server.herokuapp.com/assets/img/alcohols/" + req.file.originalname;
     }
     else
     {
-        urlImg = "http://localhost:8080/assets/img/logo.png";
+        urlImg = "https://alcohol-server.herokuapp.com/assets/img/logo.png";
     }
     const newAlcohol = new ALCOHOL({
         title,
@@ -105,7 +105,7 @@ router.post('/edit/:id', upload.single('urlImg'), (req,res) => {
     } = req.body;
     if (req.file)
     {
-        urlImg = "http://localhost:8080/assets/img/alcohols/" + req.file.originalname;
+        urlImg = "https://alcohol-server.herokuapp.com/assets/img/alcohols/" + req.file.originalname;
         ALCOHOL.findByIdAndUpdate(
             {_id: req.params.id},
             {

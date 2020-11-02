@@ -8,14 +8,14 @@ async function siso() {
     const cartBody = document.getElementById('cart-body');
     cartBody.innerHTML = '';
 
-    let path = 'http://localhost:8080/cart?';
+    let path = 'https://alcohol-server.herokuapp.com/cart?';
 
     let summ = 0;
 
     for (let key of storage) {
         console.dir(`${key}: ${localStorage.getItem(key)}`);
         
-        path = 'http://localhost:8080/cart?';
+        path = 'https://alcohol-server.herokuapp.com/cart?';
         path = path + `id=${key}`;
 
         await fetch(path, {
@@ -100,7 +100,7 @@ async function siso() {
           }
 
           
-          path = 'http://localhost:8080/cart?';
+          path = 'https://alcohol-server.herokuapp.com/cart?';
           
           console.dir(summ);
           const accept = document.createElement('a');
