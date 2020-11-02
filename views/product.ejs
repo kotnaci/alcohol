@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="../assets/css/home.css">
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5 col-lg-5 ml-3 mb-3"><img src="<%= alcohol.urlImg %>" alt="" style="width: 200px; height: 700px;"></div> 
+        <div class="col-sm-6 col-lg-6">
+            <h1><%= alcohol.title %></h1>
+            <h3><%= alcohol.price %> руб</h3>
+            <p><%= alcohol.description %></p>
+            <a onclick="pushCart('<%=alcohol._id%>')" class="btn mt-1 btn-danger">Добавить в корзину</a>
+
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    document.title = "Продукция";
+  </script>
+
+<script>
+    document.getElementById('mobile').onclick = function() {
+      document.getElementById('sidebar').style.marginLeft = "0px";
+    }
+      
+    document.getElementById('content').onclick = function() {
+        if(window.innerWidth < 769) document.getElementById('sidebar').style.marginLeft = "-250px";
+    }
+    
+    function pushCart(id) {
+      if (!localStorage.getItem(id))
+      {
+        localStorage.setItem(id, '1');
+      }
+      else
+      {
+        localStorage.setItem(id, `${Number(localStorage.getItem(id)) + 1}`)
+      }
+      alert("Добавлено")
+    }
+    </script>

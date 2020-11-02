@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <% if (alcohols) { %>
+                <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Наименование</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Колво</th>
+                        <th scope="col">Изображение</th>
+                        <th scope="col"><a href="/admin/alcohols/add" class="btn btn-danger"><i class="fas fa-plus"></i> Добавить</a></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <% alcohols.forEach(function(alcohol) { %>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td><%= alcohol.title %></td>
+                                <td><%= alcohol.price %></td>
+                                <td><%= alcohol.count %></td>
+                                <td><img src="<%= alcohol.urlImg %>" class="card-img-top img-fluid " style="width: 100px; height: 300px;" alt="... "></td>
+                                <td><a href="/admin/alcohols/edit/<%= alcohol._id %>" class="btn btn-danger"><i class="fas fa-pen "></i></a> <a href="/admin/alcohols/del/<%= alcohol._id %>" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                  </table>
+            <% } %>
+            </div>
+    </div>
+</div>
+<button type="button" class="btn btn-danger" id="mobile" ><i class="fas fa-list"></i></button>

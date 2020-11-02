@@ -1,0 +1,151 @@
+<link rel="stylesheet" href="./assets/css/home.css">
+
+
+
+
+<div class="wr">
+
+  <!-- Sidebar -->
+  <nav id="sidebar" style="margin-top: -50px; ">
+    <div class="sidebar-header">
+        <h3> </h3>
+    </div>
+
+    <ul class="list-unstyled components">
+        
+      <li>
+        <a href="./alcohols?type=Absent&page=1">Абсент</a>
+      </li>
+
+      <li>
+        <a href="./alcohols?type=Vodka&page=1">Водка</a>
+      </li>
+      <li>
+        <a href="./alcohols?type=Vine&page=1">Вино</a>
+      </li>
+      <li>
+        <a href="./alcohols?type=Beer&page=1">Пиво</a>
+      </li>
+      <li>
+        <a href="./alcohols?type=Gin&page=1">Джин</a>
+      </li>
+      <li>
+        <a href="./alcohols?type=Rome&page=1">Ром</a>
+      </li>
+      <li>
+        <a href="./alcohols?type=Viskey&page=1">Виски</a>
+      </li>
+      <li>
+        <a href="./alcohols?type=Cognac&page=1">Коньяк</a>
+      </li>
+    </ul>
+  </nav>
+  <!-- Page Content -->
+
+   <div id="content">
+    <div class="container-fluid">
+      <div class="row">
+        <% alcohols.forEach(item => { %>
+          <div class="col-sm-12 col-md-4">
+            <div class=" mb-3">
+              <div class="box">
+                <img src="<%= item.urlImg %>" class="card-img-top" alt="...">
+              </div>
+              
+              <div class="card-body">
+                <h5 class="card-title"><%= item.title %></h5>
+                <a onclick="pushCart('<%=item._id%>')" class="btn mt-1 btn-danger"><%= item.price %></a>
+                <a href="/alcohols/<%= item._id%>" class="btn mt-1 btn-danger">к описанию</a>
+              </div>
+            </div>
+          </div>
+        <% }); %>                 
+      </div>   
+
+
+      <div class="row">
+        <div class="col-sm-12 col-md-4" style="visibility: hidden; height: 50px;">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4" style="visibility: hidden; height: 50px;">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-4" style="visibility: hidden; height: 50px;">
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+        </div>
+      </div> 
+      
+      
+
+
+      <div class="row">
+        <div class="col-12 ">
+          <nav  aria-label="Page navigation example">
+            <ul class="pagination" class="paggi">
+              <li class="page-item">
+                <a class="page-link" href="<%=newUrl%>&page=<%=prevPage%>" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+            <% for(let i = 0; i < count/6; i++) { %>
+              <li class="page-item "><a class="page-link" href="<%=newUrl%>&page=<%=i+1%>" ><%=i+1%></a></li>
+            <%}%>
+              <li class="page-item">
+                <a class="page-link" href="<%=newUrl%>&page=<%=nextPage%>" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div> 
+
+
+    </div>
+  </div>
+
+</div> 
+
+<button  class="btn btn-danger myButton" id="mobile"><i class="fas fa-list"></i></button>
+
+<script src="./assets/js/pagination.js"></script>
+
+<script>
+document.getElementById('mobile').onclick = function() {
+  document.getElementById('sidebar').style.marginLeft = "0px";
+}
+  
+document.getElementById('content').onclick = function() {
+    if(window.innerWidth < 769) document.getElementById('sidebar').style.marginLeft = "-250px";
+}
+
+function pushCart(id) {
+  if (!localStorage.getItem(id))
+  {
+    localStorage.setItem(id, '1');
+  }
+  else
+  {
+    localStorage.setItem(id, `${Number(localStorage.getItem(id)) + 1}`)
+  }
+  alert("Добавлено")
+}
+</script>
+
+
+<script>
+  document.title = "Продукция";
+</script>
+

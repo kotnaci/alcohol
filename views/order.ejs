@@ -1,0 +1,139 @@
+<div id="Order" class="container">
+    
+</div>
+
+<script>
+async function order() {
+    let storage = Object.keys(localStorage);
+
+    const cartBody = document.getElementById('Order');
+    cartBody.innerHTML = '';
+
+    let path = 'http://localhost:8080/cart?';
+
+    let summ = 0;
+
+    for (let key of storage) {
+        console.dir(`${key}: ${localStorage.getItem(key)}`);
+        
+        path = 'http://localhost:8080/cart?';
+        path = path + `id=${key}`;
+
+        await fetch(path, {
+                  method: 'GET',
+                  headers: { 'Content-Type': 'application/json' }
+              })
+                  .then(response => response.json())
+                  .then(commit => {
+                      let summItm = 0;
+                      
+                      let row = document.createElement("div");
+                      row.classList.add("row");
+                      
+                      row.innerHTML = `
+                        <div class="col-sm-12 col-lg-4">
+                            <img src="${commit.urlImg}" class="img-fluid mb-3" style="width: 130px; height: 400px;" alt="">
+                        </div>
+                        <div class="col-sm-12 col-lg-6">
+                            <h3>${commit.title}</h3>
+                            <p>${commit.description}</p>
+                            <p>${commit.price}BYN x${Number(localStorage.getItem(key))} : ${commit.price * Number(localStorage.getItem(key))}BYN</p>
+                        </div>
+                        <div class="col-sm-12 col-lg-2">
+                            <button onclick="delItem('${key}')" class="btn btn-danger">
+                                <i class="fa-times fas"></i>
+                            </button>
+                        </div>
+                      `;
+
+                      summ += commit.price * Number(localStorage.getItem(key));
+                      
+                      cartBody.appendChild(row)
+                  }).catch(err => console.log(err));
+
+          }
+
+          
+          cartBody.innerHTML += `
+            <div class="row mb-3">
+                    <div class="col-sm-12 col-lg-6">
+                        <label for="FIO">Ф.И.О.</label>
+                        <input type="text" name="FIO" id="FIO">
+                    </div>
+                    <div class="col-sm-12 col-lg-6">
+                        <label for="phone">Телефон</label>
+                        <input type="text" name="phone" id="phone">
+                    </div>
+                    <div class="col-sm-12 col-lg-6">
+                        <label for="price">Сумма заказа ${summ}</label>
+                        <input type="hidden" name="price" id="price" value="${summ}">
+                    </div>
+                    <div class="col-sm-12 col-lg-6">
+                        <button onclick="sendOrder()" class="btn btn-danger">Заказать</button>
+                    </div>
+            </div> 
+          `;
+}
+
+function delItem(key) {
+    localStorage.removeItem(key); 
+    order();
+}
+
+function sendOrder() {
+    let arr = [,];
+    let storage = Object.keys(localStorage);
+    for(let key of storage)
+    {
+        arr.push([key, localStorage.getItem(key)])
+    }
+    let body = {
+        FIO: document.getElementById('FIO').value,
+        phone: document.getElementById('phone').value,
+        price: document.getElementById('price').value,
+        products: arr
+    }
+
+    sendRequest('POST' ,'/admin/orders', body)
+
+}
+
+document.addEventListener("DOMContentLoaded", order);
+
+const requestURL = 'http://jsonplaceholder.typicode.com/users';
+
+function sendRequest(method, url, body = null) {
+    return new Promise((resolve, reject) => {
+        const xmlHttpRequrest = new XMLHttpRequest();
+
+        xmlHttpRequrest.open(method, url);
+
+        xmlHttpRequrest.responseType = 'json';
+
+        xmlHttpRequrest.setRequestHeader('Content-Type', 'application/json');
+
+        xmlHttpRequrest.onload = () => {
+            if (xmlHttpRequrest.status >= 400) {
+                console.error(xmlHttpRequrest.response)
+            } else {
+                window.location.replace(xmlHttpRequrest.responseURL);
+            }
+        }
+
+        xmlHttpRequrest.onerror = () => {
+            console.log(xmlHttpRequrest.response)
+        }
+
+        xmlHttpRequrest.send(JSON.stringify(body));
+        
+    });
+}
+
+// sendRequest('GET', requestURL)
+// .then(data => { console.log(data) })
+// .catch(err => { console.log(err) });
+
+
+
+
+</script>
