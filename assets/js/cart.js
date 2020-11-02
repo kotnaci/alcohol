@@ -107,11 +107,12 @@ async function siso() {
           const line1 = document.createElement('hr');
           const line2 = document.createElement('hr');
           const sum = document.createElement('h5');
-    
+          const buttDiv = document.createElement('div');
 
         accept.classList.add('btn');
         accept.classList.add('btn-danger');
         accept.classList.add('buttoncenter');
+        buttDiv.appendChild(accept);
           accept.appendChild(document.createTextNode('Оформить заказ'));
           accept.href="/order"
 
